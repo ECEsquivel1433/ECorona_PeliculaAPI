@@ -80,44 +80,43 @@ namespace PL.Controllers
             return View(pelicula);
         }
 
-       
-        public IActionResult AddFavorito(int IdPelicula)
+        [HttpGet]
+        public IActionResult DeleteFavorito(int IdPelicula)
         {
-            ML.Pelicula pelicula = new ML.Pelicula();
-            pelicula.results = new List<object>();
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://api.themoviedb.org/3/");
-
-                var responseTask = client.GetAsync("https://api.themoviedb.org/3/account/19728978/favorite/movies?api_key=99e2becbdc4d8cdf4d51c55832a65f43&session_id=ebd5fbef92ef64d8f17eb93f8eb33fc7e4198d4f&page=1&language=es-ES");
-                responseTask.Wait(); //esperar a que se resuelva la llamada al servicio
-
-                var result = responseTask.Result;
-
-                if (result.IsSuccessStatusCode)
+                if (IdPelicula != null)
                 {
-                    var readTask = result.Content.ReadAsAsync<dynamic>();
-                    readTask.Wait();
+                    ML.Pelicula pelicula = new ML.Pelicula();
+                    pelicula.media_id = IdPelicula;
+                    pelicula.media_type = "movie";
+                    pelicula.favorite = false;
 
-                    foreach (var resultItem in readTask.Result.results)
+                    client.BaseAddress = new Uri("https://api.themoviedb.org/3/");
+
+                    //HTTP POST
+                    var postTask = client.PostAsJsonAsync<ML.Pelicula>("https://api.themoviedb.org/3/account/19728978/favorite?api_key=99e2becbdc4d8cdf4d51c55832a65f43&session_id=744e4a56d0759f21a4900776e186ee42dbc0e073", pelicula);
+
+                    postTask.Wait();
+
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
                     {
-                        ML.Pelicula resultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Pelicula>(resultItem.ToString());
-                        //pelicula.Drinks.Add(resultItemList);
-                        ML.Pelicula pelicula1 = new ML.Pelicula();
-                        pelicula1.id = resultItemList.id;
-                        pelicula1.original_title = resultItemList.original_title;
-                        pelicula1.overview = resultItemList.overview;
-                        pelicula1.poster_path = "https://image.tmdb.org/t/p/w185" + resultItemList.poster_path;
 
-                        pelicula.results.Add(pelicula1);
+                        ViewBag.Message = " Se elimnino correctamente ";
+
+                    }
+                    else
+                    {
+                        ViewBag.Message = "No se elimnino correctamente  ";
 
                     }
                 }
             }
-            return View(pelicula);
-        }
+            return View("Modal");
 
+        }
 
     }
 }

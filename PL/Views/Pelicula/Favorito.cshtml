@@ -29,11 +29,9 @@
                         <img src=@pelicula.poster_path>
                         <div class="card-body ">
                             <h5 class="card-title card-header text-center bg-transparent" id="Nombre">@pelicula.original_title</h5>
-                            <h5 class="card-title card-header text-center bg-transparent" id="Nombre">@pelicula.popularity</h5>
-                            <p class="card-text" id="Ingrediente"> Descripción: </p>
-                            <p class="card-text" id="Ingrediente"> @pelicula.overview <img src=@pelicula.overview> </p>
-                           
-                            <a class="btn btn-danger glyphicon" onclick="DeleteFavorito(@pelicula.id)">Eliminar de favoritos</a>
+                            <p class="card-text"> Descripción: </p>
+                            <p class="card-text"> @pelicula.overview  </p>
+                            <a class="btn btn-danger bi bi-pencil-square" href="@Url.Action("DeleteFavorito", "Pelicula", new { IdPelicula = pelicula.id })">Eliminar favorito</a>
                         </div>
                     </div>
                 </div>
@@ -47,7 +45,7 @@
         $.ajax({
             method: "POST",
             dataType: 'application/json',
-            url: 'https://api.themoviedb.org/3/account/19728978/favorite?api_key=99e2becbdc4d8cdf4d51c55832a65f43&session_id=ebd5fbef92ef64d8f17eb93f8eb33fc7e4198d4f',
+            url: 'https://api.themoviedb.org/3/account/19728978/favorite?api_key=99e2becbdc4d8cdf4d51c55832a65f43&session_id=744e4a56d0759f21a4900776e186ee42dbc0e073',
             data: {
                 "media_type": "movie",
                 "media_id": idPelicula,
@@ -65,7 +63,7 @@
     function GetUser() {
         $.ajax({
             url: 'https://randomuser.me/api/',
-            method: "POST",
+            method: "GET",
             dataType: 'json',
             success: function (results) {
 

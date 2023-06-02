@@ -29,9 +29,8 @@
                         <img src=@pelicula.poster_path>
                         <div class="card-body ">
                             <h5 class="card-title card-header text-center bg-transparent" id="Nombre">@pelicula.original_title</h5>
-                            <h5 class="card-title card-header text-center bg-transparent" id="Nombre">@pelicula.popularity</h5>
-                            <p class="card-text" id="Ingrediente"> Descripción: </p>
-                            <p class="card-text" id="Ingrediente"> @pelicula.overview <img src=@pelicula.overview> </p>
+                            <p class="card-text"> Descripción: </p>
+                            <p class="card-text"> @pelicula.overview </p>
                             <a class="btn btn-danger glyphicon" onclick="AddFavorito(@pelicula.id)">Agregar a favoritos</a>
                         </div>
                     </div>

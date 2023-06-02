@@ -3,6 +3,9 @@
     public class Pelicula
     {
         public dynamic id { get; set; } = default!;
+        public int media_id { get; set; } = default!;
+        public string media_type { get; set; } = default!;
+        public bool favorite { get; set; } = default!;
         public dynamic original_language { get; set; } = default!;
         public dynamic original_title { get; set; } = default!;
         public dynamic overview { get; set; } = default!;
